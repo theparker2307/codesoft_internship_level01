@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <style>
+        /* Centering the calculator on the screen */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #2a2a37;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        /* Calculator Main Body Styling (Matching Demo) */
+        .calculator {
+            background-color: #420e61; /* Light Blue Main Background */
+            padding: 20px;
+            border-radius: 15px;
+            width: 320px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Calculator Display Screen */
+        .display {
+            background-color: #778c9b; /* Very light blue/white */
+            color: #000;
+            font-size: 2.5rem;
+            text-align: right;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            min-height: 50px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            box-sizing: border-box;
+            overflow-x: auto;
+        }
+
+        /* CSS Grid for Buttons */
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        /* Button Styling */
+        button {
+            background-color: #134782; /* Darker Blue Buttons */
+            color: white;
+            font-size: 1.5rem;
+            border: none;
+            padding: 20px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #0D47A1;
+        }
+
+        button:active {
+            background-color: #0a3375;
+            transform: scale(0.98);
+        }
+
+        /* Specific style for Clear and Equals */
+        .btn-clear {
+            background-color: #d32f2f;
+        }
+        .btn-clear:hover {
+            background-color: #b71c1c;
+        }
+        .btn-equals {
+            background-color: #388E3C;
+        }
+        .btn-equals:hover {
+            background-color: #2E7D32;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        
+        <div class="buttons">
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button onclick="appendValue('+')">+</button>
+            
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button onclick="appendValue('-')">-</button>
+            
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button onclick="appendValue('*')">*</button>
+            
+            <button onclick="clearDisplay()" class="btn-clear">C</button>
+            <button onclick="appendValue('0')">0</button>
+            <button onclick="calculate()" class="btn-equals">=</button>
+            <button onclick="appendValue('/')">/</button>
+        </div>
+    </div>
+
+    <script>
+        // JS to handle calculations and display
+        const display = document.getElementById('display');
+
+        // Adds numbers/operators to the screen
+        function appendValue(value) {
+            if (display.innerText === '0' || display.innerText === 'Error') {
+                display.innerText = value;
+            } else {
+                display.innerText += value;
+            }
+        }
+
+        // Clears the screen back to 0
+        function clearDisplay() {
+            display.innerText = '0';
+        }
+
+        // Calculates the mathematical expression
+        function calculate() {
+            try {
+                // Using eval() for basic string math evaluation
+                let result = eval(display.innerText);
+                
+                // Handle division by zero or weird JS math artifacts
+                if (result === Infinity || isNaN(result)) {
+                    display.innerText = 'Error';
+                } else {
+                    display.innerText = result;
+                }
+            } catch (error) {
+                // Catches syntax errors (e.g. typing 5++5)
+                display.innerText = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
